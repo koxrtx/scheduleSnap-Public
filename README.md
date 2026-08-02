@@ -133,7 +133,7 @@ AI
 
 ER図
 
-作成予定
+![ER図](./docs/er-diagram.png)
 
 ⸻
 
