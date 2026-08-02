@@ -1,6 +1,6 @@
 /* アプリ全体の色・文字・背景などの基本設定を書く場所 */
 
-@import "tailwindcss";
+@import 'tailwindcss';
 
 /* Webページ全体の一番親に設定するCSS変数 */
 :root {
