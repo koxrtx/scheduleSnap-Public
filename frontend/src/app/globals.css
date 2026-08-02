@@ -1,5 +1,8 @@
+/* アプリ全体の色・文字・背景などの基本設定を書く場所 */
+
 @import "tailwindcss";
 
+/* Webページ全体の一番親に設定するCSS変数 */
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -8,19 +11,25 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* layout.tsxでGeistフォント読み込み　*/
+  --font-sans: var(--font-zen-maru);
+  --font-en: var(--font-nunito);
 }
 
+/* ユーザーの端末がダークモード設定なら　*/
+/* 私のPC　ダークモードだから一旦消す　*/
+/*
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
   }
 }
+  */
 
+/* 実際に画面全体を表示する部分 */
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-zen-maru), sans-serif;
 }
