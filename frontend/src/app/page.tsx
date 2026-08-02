@@ -18,6 +18,13 @@ export default function Home() {
         <p>大切な予定をGoogleカレンダーへ登録</p>
 
         <button className="mt-8 border border-black">Googleでログイン</button>
+        <p className="mt-4 text-xs text-gray-500">
+          Googleログインすると
+        </p>
+        <p className="text-xs text-gray-500">
+          読み取った予定をGoogleカレンダーへ登録できます。
+        </p>
+
       </div>
     </main>
   );
