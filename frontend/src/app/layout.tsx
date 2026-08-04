@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Nunito, Zen_Maru_Gothic } from 'next/font/google';
 import './globals.css';
+import AuthProvider from '@/components/AuthProvider';
 
 const nunito = Nunito({
   variable: '--font-nunito',
@@ -27,7 +28,11 @@ export default function RootLayout({
       lang="ja"
       className={`${nunito.variable} ${zenMaru.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <AuthProvider>
+          {children}
+        </AuthProvider>
+      </body>
     </html>
   );
 }
