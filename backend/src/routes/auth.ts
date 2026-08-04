@@ -23,7 +23,7 @@ const v1Router = new Hono()
   .use(
     '*',
     initAuthConfig((c) => ({
-      // 後でいるか確認要
+      // 後でいるか確認要 >> Hono側のルート設定が /api/v1/auth のため、Auth.jsに認識させるために設定。
       basePath: "/api/v1/auth",
 
       adapter: DrizzleAdapter(db, {
