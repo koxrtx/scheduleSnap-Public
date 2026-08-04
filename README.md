@@ -1,6 +1,6 @@
 Schedule Snap（仮）
 
-サービス概要
+## サービス概要
 
 Schedule Snap は、幼稚園・保育園・学校などから配布される予定表をスマートフォンで撮影するだけで、AIが予定を読み取り、Googleカレンダーへ簡単に登録できるWebアプリです。
 
@@ -8,7 +8,7 @@ Schedule Snap は、幼稚園・保育園・学校などから配布される予
 
 ⸻
 
-サービスへの思い・作成理由
+## サービスへの思い・作成理由
 
 子どもが幼稚園に通い始めてから、毎月のお便りや年間行事予定表など、多くの紙の予定表を受け取るようになりました。
 
@@ -26,14 +26,12 @@ Schedule Snap は、幼稚園・保育園・学校などから配布される予
 また、入力を後回しにしてしまい、予定の登録を忘れてしまうこともありました。
 
 そこで、
-
 「予定表を撮影するだけでAIが内容を理解し、Googleカレンダーへ登録できれば、保護者の負担を減らせるのではないか」
-
 と考え、このサービスを作成しました。
 
 ⸻
 
-ユーザー層
+## ユーザー層
 
 * 幼稚園・保育園に通う子どもがいる保護者
 * 小学校低学年の子どもがいる保護者
@@ -42,7 +40,7 @@ Schedule Snap は、幼稚園・保育園・学校などから配布される予
 
 ⸻
 
-サービス利用イメージ
+## サービス利用イメージ
 
 1. 幼稚園・保育園・学校から配布された予定表を撮影
 2. AIが画像から予定を抽出・解析
@@ -52,7 +50,7 @@ Schedule Snap は、幼稚園・保育園・学校などから配布される予
 
 ⸻
 
-推しポイント・差別化ポイント
+## 推しポイント・差別化ポイント
 
 * AIが予定表の内容を解析し、予定を自動抽出
 * Googleカレンダーへワンクリックで登録
@@ -61,7 +59,6 @@ Schedule Snap は、幼稚園・保育園・学校などから配布される予
 * 保育園・幼稚園・学校特有の予定にも対応
 
 例：
-
 * お弁当の日
 * 午前保育
 * 保護者会
@@ -70,79 +67,94 @@ Schedule Snap は、幼稚園・保育園・学校などから配布される予
 
 ⸻
 
-主な機能
+## 主な機能
 
-未ログインユーザー
+## 未ログインユーザー
 
 * サービス紹介の閲覧
+* Googleログイン
+
+⸻
+
+## ログインユーザー
+
 * 予定表画像のアップロード
 * AIによるOCR・予定抽出
 * 抽出結果の一覧表示
 * 登録前の内容編集
 * エラーチェック
-* Googleログイン
-
-⸻
-
-ログインユーザー
-
 * Googleカレンダー連携
 * Googleカレンダーへの予定登録
 
 ⸻
 
-使用技術
+## 使用技術
 
-フロントエンド
+### フロントエンド
 
-* Next.js（ネクスト ジェイエス）
-* React（リアクト）
-* TypeScript（タイプ スクリプト）
-* Tailwind CSS（テイルウィンド シーエスエス）
+* Next.js
+* React
+* TypeScript
+* Tailwind CSS
 
-バックエンド
+### バックエンド
 
-* Hono（ホノ）
+* Hono
 * TypeScript
 
-AI
+### AI
 
 * OpenAI API
     * 画像解析
     * 予定抽出
 
-データベース
+### データベース
 
 * PostgreSQL
 
-インフラ
+### インフラ
 
 * Docker
 * Vercel
-* Cloud Run※予定
+* Render
+* NEON
 
-認証
+### 認証
 
 * Google OAuth
 
-外部API
+### 外部API
 
 * Google Calendar API
 
 ⸻
 
-ER図
+## ER図
 
 ![ER図](./docs/er-diagram.png)
 
 ⸻
 
-画面遷移図
+## 画面遷移図
 
 作成予定
 
 ⸻
 
-License
+## Documentation / References
+
+- Hono Documentation
+  https://hono.dev/
+
+- Auth.js Documentation
+  https://authjs.dev/
+
+- Next.js Documentation
+  https://nextjs.org/docs
+
+- Google Identity Services Branding Guidelines
+  https://developers.google.com/identity/branding-guidelines
+
+## License
 
 This project is licensed under the MIT License.
