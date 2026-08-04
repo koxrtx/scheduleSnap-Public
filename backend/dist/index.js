@@ -2,10 +2,14 @@
 import "dotenv/config";
 import { serve } from '@hono/node-server';
 import { Hono } from 'hono';
+// 認証ルート
+import authRoute from "./routes/auth.js";
 const app = new Hono();
-app.get('/', (c) => {
-    return c.text('Hello Hono!');
-});
+app.route("/", authRoute);
+// Hono　が動作してるか確認用ルートのためコメントアウト（削除してもいい）
+// app.get('/', (c) => {
+///  return c.text('Hello Hono!')
+// })
 serve({
     fetch: app.fetch,
     port: 3001

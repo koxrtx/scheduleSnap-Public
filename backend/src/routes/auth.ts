@@ -23,6 +23,9 @@ const v1Router = new Hono()
   .use(
     '*',
     initAuthConfig((c) => ({
+      // 後でいるか確認要
+      basePath: "/api/v1/auth",
+
       adapter: DrizzleAdapter(db, {
         usersTable: users,
         accountsTable: accounts,
@@ -30,11 +33,11 @@ const v1Router = new Hono()
         sessionsTable: sessions,
         verificationTokensTable: verificationTokens,
       }),
-      secret: c.env.AUTH_SECRET,
+      secret: process.env.AUTH_SECRET,
       providers: [
         Google({
-          clientId: c.env.GOOGLE_ID,
-          clientSecret: c.env.GOOGLE_SECRET,
+          clientId: process.env.GOOGLE_ID,
+          clientSecret: process.env.GOOGLE_SECRET,
         }),
       ],
       session: { strategy: 'jwt' },
