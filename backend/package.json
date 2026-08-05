@@ -7,12 +7,18 @@
     "start": "node dist/index.js"
   },
   "dependencies": {
+    "@auth/core": "^0.41.3",
+    "@auth/drizzle-adapter": "^1.11.3",
+    "@hono/auth-js": "^1.1.1",
     "@hono/node-server": "^2.0.12",
     "dotenv": "^17.4.2",
-    "hono": "^4.12.33"
+    "drizzle-orm": "^0.45.2",
+    "hono": "^4.12.33",
+    "postgres": "^3.4.9"
   },
   "devDependencies": {
     "@types/node": "^26.1.1",
+    "drizzle-kit": "^0.31.10",
     "tsx": "^4.23.0",
     "typescript": "^7.0.2"
   }

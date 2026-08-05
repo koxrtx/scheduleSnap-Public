@@ -1,5 +1,6 @@
 // ドップページ
 import Image from 'next/image';
+import LoginButton from '@/components/LoginButton';
 
 export default function Home() {
   return (
@@ -18,7 +19,7 @@ export default function Home() {
         <p>写真を撮るだけで</p>
         <p>大切な予定をGoogleカレンダーへ登録</p>
 
-        <button className="mt-8 border border-black">Googleでログイン</button>
+        <LoginButton />
         <p className="mt-4 text-xs text-gray-500">Googleログインすると</p>
         <p className="text-xs text-gray-500">
           読み取った予定をGoogleカレンダーへ登録できます。
