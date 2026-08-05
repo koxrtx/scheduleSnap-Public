@@ -46,14 +46,6 @@ const v1Router = new Hono()
   // ログインしているか確認するミドルウェア
   // .use('*', verifyAuth())
 
-  .use('/auth/*', async (c, next) => {
-
-  console.log("AUTH REQUEST:", c.req.method, c.req.path)
-
-  await next()
-
-})
-
   .use('/auth/*', authHandler())
 
 const authRoute = new Hono().route('/api/v1', v1Router)
