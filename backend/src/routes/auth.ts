@@ -18,12 +18,15 @@ import {
   verificationTokens,
 } from '../db/schema.js'
 
+// 本番環境かどうかを判定
+const isProduction = process.env.NODE_ENV === 'production'
+
 // 認証専用のルーターを作成
 const v1Router = new Hono()
   .use(
     '*',
     initAuthConfig((c) => ({
-      // 後でいるか確認要 >> Hono側のルート設定が /api/v1/auth のため、Auth.jsに認識させるために設定。
+      // Hono側のルート設定が /api/v1/auth のため、Auth.jsに認識させるために設定。
       basePath: "/api/v1/auth",
 
       adapter: DrizzleAdapter(db, {
@@ -33,14 +36,51 @@ const v1Router = new Hono()
         sessionsTable: sessions,
         verificationTokensTable: verificationTokens,
       }),
+      
       secret: process.env.AUTH_SECRET,
+      
       providers: [
         Google({
           clientId: process.env.GOOGLE_ID,
           clientSecret: process.env.GOOGLE_SECRET,
         }),
       ],
+      
       session: { strategy: 'jwt' },
+      
+      // 本番環境用の Cookie 設定
+      cookies: {
+        sessionToken: {
+          name: 'authjs.session-token',
+          options: {
+            httpOnly: true,
+            sameSite: isProduction ? 'none' : 'lax',
+            path: '/',
+            secure: isProduction, // 本番では true
+          }
+        },
+        csrfToken: {
+          name: 'authjs.csrf-token',
+          options: {
+            httpOnly: true,
+            sameSite: isProduction ? 'none' : 'lax',
+            path: '/',
+            secure: isProduction,
+          }
+        },
+        callbackUrl: {
+          name: 'authjs.callback-url',
+          options: {
+            httpOnly: true,
+            sameSite: isProduction ? 'none' : 'lax',
+            path: '/',
+            secure: isProduction,
+          }
+        },
+      },
+      
+      // Render などでホスト検証をスキップ ️
+      trustHost: true,
     }))
   )
   // ログインしているか確認するミドルウェア
