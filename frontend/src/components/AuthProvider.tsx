@@ -12,6 +12,7 @@ import {
 authConfigManager.setConfig({
   baseUrl: process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001",
   basePath: "/api/v1/auth",
+  credentials: 'include',
 })
 
 export default function AuthProvider({
