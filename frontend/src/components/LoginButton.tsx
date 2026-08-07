@@ -1,13 +1,10 @@
 "use client";
 
-import { useSession, signIn } from "@hono/auth-js/react";
+import { signIn } from "@hono/auth-js/react";
 import "./LoginButton.css";
 
 export default function LoginButton() {
-  const { data: session } = useSession();
-  return session ? (
-    <p>{session.user?.name}</p>
-  ) : (
+  return (
     <button className="mt-4 gsi-material-button" onClick={() => signIn("google")}>
       <div className="gsi-material-button-state"></div>
       <div className="gsi-material-button-content-wrapper">
