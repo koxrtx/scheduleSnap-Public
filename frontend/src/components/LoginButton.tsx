@@ -5,7 +5,10 @@ import "./LoginButton.css";
 
 export default function LoginButton() {
   return (
-    <button className="mt-4 gsi-material-button" onClick={() => signIn("google")}>
+    <button className="mt-4 gsi-material-button" onClick={() => signIn("google", {
+      redirectTo: `${window.location.origin}/dashboard`,
+    })
+    }>
       <div className="gsi-material-button-state"></div>
       <div className="gsi-material-button-content-wrapper">
         <div className="gsi-material-button-icon">
