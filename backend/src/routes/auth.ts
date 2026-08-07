@@ -56,7 +56,7 @@ const v1Router = new Hono()
             httpOnly: true,
             sameSite: isProduction ? 'none' : 'lax',
             path: '/',
-            secure: isProduction, // 本番では true
+            secure: isProduction,
           }
         },
         csrfToken: {
@@ -77,15 +77,43 @@ const v1Router = new Hono()
             secure: isProduction,
           }
         },
+        // PKCE用のCookieも追加
+        pkceCodeVerifier: {
+          name: 'authjs.pkce.code_verifier',
+          options: {
+            httpOnly: true,
+            sameSite: isProduction ? 'none' : 'lax',
+            path: '/',
+            secure: isProduction,
+          }
+        },
+        state: {
+          name: 'authjs.state',
+          options: {
+            httpOnly: true,
+            sameSite: isProduction ? 'none' : 'lax',
+            path: '/',
+            secure: isProduction,
+          }
+        },
+        nonce: {
+          name: 'authjs.nonce',
+          options: {
+            httpOnly: true,
+            sameSite: isProduction ? 'none' : 'lax',
+            path: '/',
+            secure: isProduction,
+          }
+        },
       },
       
-      // Render などでホスト検証をスキップ ️
+      // Render などでホスト検証をスキップ
       trustHost: true,
+      
+      // 本番環境では secure cookies を使用
+      useSecureCookies: isProduction,
     }))
   )
-  // ログインしているか確認するミドルウェア
-  // .use('*', verifyAuth())
-
   .use('/auth/*', authHandler())
 
 const authRoute = new Hono().route('/api/v1', v1Router)
