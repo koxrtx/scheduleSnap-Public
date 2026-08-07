@@ -48,68 +48,14 @@ const v1Router = new Hono()
       
       session: { strategy: 'jwt' },
       
-      // 本番環境用の Cookie 設定
-      cookies: {
-        sessionToken: {
-          name: 'authjs.session-token',
-          options: {
-            httpOnly: true,
-            sameSite: isProduction ? 'none' : 'lax',
-            path: '/',
-            secure: isProduction,
-          }
-        },
-        csrfToken: {
-          name: 'authjs.csrf-token',
-          options: {
-            httpOnly: true,
-            sameSite: isProduction ? 'none' : 'lax',
-            path: '/',
-            secure: isProduction,
-          }
-        },
-        callbackUrl: {
-          name: 'authjs.callback-url',
-          options: {
-            httpOnly: true,
-            sameSite: isProduction ? 'none' : 'lax',
-            path: '/',
-            secure: isProduction,
-          }
-        },
-        // PKCE用のCookieも追加
-        pkceCodeVerifier: {
-          name: 'authjs.pkce.code_verifier',
-          options: {
-            httpOnly: true,
-            sameSite: isProduction ? 'none' : 'lax',
-            path: '/',
-            secure: isProduction,
-          }
-        },
-        state: {
-          name: 'authjs.state',
-          options: {
-            httpOnly: true,
-            sameSite: isProduction ? 'none' : 'lax',
-            path: '/',
-            secure: isProduction,
-          }
-        },
-        nonce: {
-          name: 'authjs.nonce',
-          options: {
-            httpOnly: true,
-            sameSite: isProduction ? 'none' : 'lax',
-            path: '/',
-            secure: isProduction,
-          }
-        },
-      },
-      
       // Render などでホスト検証をスキップ
       trustHost: true,
       
+      callbacks: {
+  async redirect({ url, baseUrl }) {
+    return url;
+  },
+},
       // 本番環境では secure cookies を使用
       useSecureCookies: isProduction,
     }))
