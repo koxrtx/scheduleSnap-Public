@@ -10,7 +10,7 @@ import {
 // Auth.jsの認証APIの接続先をHono側のURLに設定する
 // 公式に記載あり
 authConfigManager.setConfig({
-  baseUrl: "http://localhost:3001",
+  baseUrl: process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001",
   basePath: "/api/v1/auth",
 })
 
