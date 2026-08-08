@@ -20,6 +20,12 @@ import {
 
 // 本番環境かどうかを判定
 const isProduction = process.env.NODE_ENV === 'production'
+const cookieOptions = {
+  httpOnly: true,
+  sameSite: isProduction ? 'none' : 'lax',
+  path: '/',
+  secure: isProduction,
+} as const
 
 // 認証専用のルーターを作成
 const v1Router = new Hono()
@@ -47,15 +53,42 @@ const v1Router = new Hono()
       ],
       
       session: { strategy: 'jwt' },
+
+      cookies: {
+        sessionToken: {
+          name: 'authjs.session-token',
+          options: cookieOptions,
+        },
+        csrfToken: {
+          name: 'authjs.csrf-token',
+          options: cookieOptions,
+        },
+        callbackUrl: {
+          name: 'authjs.callback-url',
+          options: cookieOptions,
+        },
+        pkceCodeVerifier: {
+          name: 'authjs.pkce.code_verifier',
+          options: cookieOptions,
+        },
+        state: {
+          name: 'authjs.state',
+          options: cookieOptions,
+        },
+        nonce: {
+          name: 'authjs.nonce',
+          options: cookieOptions,
+        },
+      },
       
       // Render などでホスト検証をスキップ
       trustHost: true,
       
       callbacks: {
-  async redirect({ url, baseUrl }) {
-    return url;
-  },
-},
+        async redirect({ url }) {
+          return url
+        },
+      },
       // 本番環境では secure cookies を使用
       useSecureCookies: isProduction,
     }))
