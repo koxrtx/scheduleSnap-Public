@@ -19,6 +19,9 @@ app.route("/api/v1/auth-check", authCheck);
 
 app.route("/api/v1/image", imageRoute)
 
+// フロントでHono RPCを使うために、APIの型を共有
+export type AppType = typeof app;
+
 // Hono　が動作してるか確認用ルートのためコメントアウト（削除してもいい）
 // app.get('/', (c) => {
 ///  return c.text('Hello Hono!')
