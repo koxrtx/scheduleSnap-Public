@@ -8,12 +8,19 @@ import authRoute from "./routes/auth.js";
 import authCheck from "./routes/authCheck.js";
 // CORS
 import corsMiddleware from "./middleware/cors.js";
+import imageRoute from "./routes/image.js";
+
 
 const app = new Hono()
 app.use('/api/*', corsMiddleware())
 
 app.route("/", authRoute)
 app.route("/api/v1/auth-check", authCheck);
+
+app.route("/api/v1/image", imageRoute)
+
+// フロントでHono RPCを使うために、APIの型を共有
+export type AppType = typeof app;
 
 // Hono　が動作してるか確認用ルートのためコメントアウト（削除してもいい）
 // app.get('/', (c) => {

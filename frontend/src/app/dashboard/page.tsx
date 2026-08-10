@@ -1,10 +1,15 @@
 // ログイン後のページ
-
 'use client';
+
 import { useRouter } from 'next/navigation';
 // 画面が表示された後に、この処理を実行する」ためのReactの機能
 import { useEffect } from "react";
 import LogoutButton from '@/components/LogoutButton';
+
+import type { AppType } from '../../../../backend/src/index.ts';
+import { hc } from 'hono/client'
+
+const client = hc<AppType>(process.env.NEXT_PUBLIC_API_URL!);
 
 export default function Dashboard() {
   const router = useRouter();
@@ -45,6 +50,21 @@ export default function Dashboard() {
           accept="image/*"
           capture="environment"
           className="hidden"
+          onChange={async (e) => {
+            const file = e.target.files?.[0];
+            if (!file) return;
+
+            const res = await client.api.v1.image.upload.$post({
+              form: {
+                file,
+              },
+            });
+            if (res.ok) {
+              const data = await res.json();
+              console.log(data.message);
+            }
+          }}
+
         />
         <LogoutButton />
       </div>
