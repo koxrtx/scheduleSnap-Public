@@ -34,7 +34,8 @@ export default function Dashboard() {
       <div className="text-center flex flex-col items-center">
         <p>園からもらった予定表を</p>
         <p>カレンダーに登録しよう</p>
-        <button className="mt-4 border-2 border-dashed border-black rounded-md px-6 py-3" onClick={() => {
+        {/* hiddenでボタンを非表示にしてる CRUD処理設計できたらその後復活 */}
+        <button className="hidden mt-4 border-2 border-dashed border-black rounded-md px-6 py-3" onClick={() => {
         // ボタンがクリックされたときに実行する処理
           document.getElementById("schedule-image")?.click();
         }}

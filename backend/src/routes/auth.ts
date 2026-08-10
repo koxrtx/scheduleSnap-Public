@@ -5,14 +5,14 @@ import { initAuthConfig, verifyAuth, authHandler } from "@hono/auth-js";
 // Auth.jsとDrizzleをつなぐ橋渡し(アダプター)
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import Google from "@auth/core/providers/google";
+import { db } from "../db/index.js";
 import {
-  db,
   users,
   accounts,
   authenticators,
   sessions,
   verificationTokens,
-} from "../db/schema.js";
+} from "../db/schema/schema.js";
 
 // 本番環境かどうかを判定
 const isProduction = process.env.NODE_ENV === "production";
