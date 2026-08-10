@@ -8,6 +8,13 @@
       "when": 1785766254013,
       "tag": "0000_stale_blob",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1786347672617,
+      "tag": "0001_rainy_blizzard",
+      "breakpoints": true
     }
   ]
 }
