@@ -19,12 +19,10 @@ const client = hc<AppType>(
 
 export default function NewSchedulePage() {
   async function onSubmit(event: SubmitEvent<HTMLFormElement>) {
-    console.log("onSubmitが実行されました");
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
 
-    console.log("APIを呼び出します");
 
     const res = await client.api.v1.schedules.$post({
       json: {
@@ -34,7 +32,6 @@ export default function NewSchedulePage() {
         end_time: formData.get('end_time') as string,
       },
     });
-    console.log("APIの結果", res);
   }
 
   return (
