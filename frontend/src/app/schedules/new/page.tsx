@@ -1,28 +1,34 @@
 'use client';
 
-import { SubmitEvent } from 'react';
+import { SubmitEvent, useState } from 'react';
 
 // RPC
 import type { AppType } from '../../../../../backend/src/app.ts';
 import { hc } from 'hono/client';
 
-const client = hc<AppType>(
-  process.env.NEXT_PUBLIC_API_URL!,
-  {
-    fetch: (input: RequestInfo | URL, init?: RequestInit) =>
-      fetch(input, {
-        ...init,
-        credentials: "include",
-      }),
-  }
-);
+const client = hc<AppType>(process.env.NEXT_PUBLIC_API_URL!, {
+  fetch: (input: RequestInfo | URL, init?: RequestInit) =>
+    fetch(input, {
+      ...init,
+      credentials: 'include',
+    }),
+});
+
+type Schedule = {
+  id: number;
+  title: string;
+  event_date: string;
+  start_time: string;
+  end_time: string;
+};
 
 export default function NewSchedulePage() {
+  const [schedules, setSchedules] = useState<Schedule[]>([]);
+
   async function onSubmit(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
-
 
     const res = await client.api.v1.schedules.$post({
       json: {
@@ -32,6 +38,11 @@ export default function NewSchedulePage() {
         end_time: formData.get('end_time') as string,
       },
     });
+
+    // 登録したスケジュールを取得
+    const newSchedule = await res.json();
+
+    setSchedules((currentSchedules) => [...currentSchedules, newSchedule[0]]);
   }
 
   return (
@@ -39,7 +50,6 @@ export default function NewSchedulePage() {
       <form onSubmit={onSubmit}>
         <div className="mx-auto max-w-5xl border border-black rounded-md p-4">
           <div className="flex items-center gap-2">
-
             <input
               type="text"
               name="title"
@@ -68,7 +78,6 @@ export default function NewSchedulePage() {
               defaultValue="14:00"
               className="border border-black rounded-md px-3 py-2"
             />
-
           </div>
         </div>
 
@@ -79,6 +88,22 @@ export default function NewSchedulePage() {
           登録する
         </button>
       </form>
+      <div className="mt-12 flex flex-col items-center">
+        <h2 className="text-xl font-bold mb-6">登録したスケジュール</h2>
+
+        {schedules.map((schedule) => (
+          <div
+            key={schedule.id}
+            className="w-full max-w-md border border-black rounded-md p-4 mb-4"
+          >
+            <p className="font-bold">{schedule.title}</p>
+            <p>{schedule.event_date}</p>
+            <p>
+              {schedule.start_time}〜{schedule.end_time}
+            </p>
+          </div>
+        ))}
+      </div>
     </main>
   );
 }
