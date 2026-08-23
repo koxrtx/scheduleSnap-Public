@@ -2,18 +2,6 @@
 
 import { SubmitEvent, useState } from 'react';
 
-// RPC
-import type { AppType } from '../../../../../backend/src/app.ts';
-import { hc } from 'hono/client';
-
-const client = hc<AppType>(process.env.NEXT_PUBLIC_API_URL!, {
-  fetch: (input: RequestInfo | URL, init?: RequestInit) =>
-    fetch(input, {
-      ...init,
-      credentials: 'include',
-    }),
-});
-
 type Schedule = {
   id: number;
   title: string;
@@ -30,19 +18,29 @@ export default function NewSchedulePage() {
 
     const formData = new FormData(event.currentTarget);
 
-    const res = await client.api.v1.schedules.$post({
-      json: {
-        title: formData.get('title') as string,
-        event_date: formData.get('event_date') as string,
-        start_time: formData.get('start_time') as string,
-        end_time: formData.get('end_time') as string,
-      },
-    });
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/v1/schedules`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({
+          title: formData.get('title') as string,
+          event_date: formData.get('event_date') as string,
+          start_time: formData.get('start_time') as string,
+          end_time: formData.get('end_time') as string,
+        }),
+      }
+    );
 
-    // 登録したスケジュールを取得
     const newSchedule = await res.json();
 
-    setSchedules((currentSchedules) => [...currentSchedules, newSchedule[0]]);
+    setSchedules((currentSchedules) => [
+      ...currentSchedules,
+      newSchedule[0],
+    ]);
   }
 
   return (
@@ -88,8 +86,11 @@ export default function NewSchedulePage() {
           登録する
         </button>
       </form>
+
       <div className="mt-12 flex flex-col items-center">
-        <h2 className="text-xl font-bold mb-6">登録したスケジュール</h2>
+        <h2 className="text-xl font-bold mb-6">
+          登録したスケジュール
+        </h2>
 
         {schedules.map((schedule) => (
           <div
