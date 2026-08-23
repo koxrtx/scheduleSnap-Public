@@ -105,7 +105,7 @@ export default function NewSchedulePage() {
       <button
         type="button"
         onClick={() => router.push('/dashboard')}
-        className="mt-6 mx-auto block border border-black rounded-md px-6 py-2"
+        className="mx-auto block border border-black rounded-md px-6 py-2"
       >
         戻る
       </button>
