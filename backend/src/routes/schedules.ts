@@ -27,5 +27,13 @@ schedulesRoute.post('/', async (c) => {
   return c.json(newSchedule);
 })
 
+schedulesRoute.get('/', async (c) => {
+  const schedulesList = await db
+    .select()
+    .from(schedules);
+
+  return c.json(schedulesList);
+});
+
 export default schedulesRoute;
 

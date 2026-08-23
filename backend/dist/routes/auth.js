@@ -1,21 +1,22 @@
 // Honoアプリを作るための部品
-import { Hono } from 'hono';
-import { initAuthConfig, verifyAuth, authHandler, } from '@hono/auth-js';
+import { Hono } from "hono";
+import { initAuthConfig, verifyAuth, authHandler } from "@hono/auth-js";
 // Auth.jsとDrizzleをつなぐ橋渡し(アダプター)
-import { DrizzleAdapter } from '@auth/drizzle-adapter';
-import Google from '@auth/core/providers/google';
-import { db, users, accounts, authenticators, sessions, verificationTokens, } from '../db/schema.js';
+import { DrizzleAdapter } from "@auth/drizzle-adapter";
+import Google from "@auth/core/providers/google";
+import { db } from "../db/index.js";
+import { users, accounts, authenticators, sessions, verificationTokens, } from "../db/schema/schema.js";
 // 本番環境かどうかを判定
-const isProduction = process.env.NODE_ENV === 'production';
+const isProduction = process.env.NODE_ENV === "production";
 const cookieOptions = {
     httpOnly: true,
-    sameSite: isProduction ? 'none' : 'lax',
-    path: '/',
+    sameSite: isProduction ? "none" : "lax",
+    path: "/",
     secure: isProduction,
 };
 // 認証専用のルーターを作成
 const v1Router = new Hono()
-    .use('*', initAuthConfig((c) => ({
+    .use("*", initAuthConfig((c) => ({
     // Hono側のルート設定が /api/v1/auth のため、Auth.jsに認識させるために設定。
     basePath: "/api/v1/auth",
     adapter: DrizzleAdapter(db, {
@@ -32,30 +33,30 @@ const v1Router = new Hono()
             clientSecret: process.env.GOOGLE_SECRET,
         }),
     ],
-    session: { strategy: 'jwt' },
+    session: { strategy: "jwt" },
     cookies: {
         sessionToken: {
-            name: 'authjs.session-token',
+            name: "authjs.session-token",
             options: cookieOptions,
         },
         csrfToken: {
-            name: 'authjs.csrf-token',
+            name: "authjs.csrf-token",
             options: cookieOptions,
         },
         callbackUrl: {
-            name: 'authjs.callback-url',
+            name: "authjs.callback-url",
             options: cookieOptions,
         },
         pkceCodeVerifier: {
-            name: 'authjs.pkce.code_verifier',
+            name: "authjs.pkce.code_verifier",
             options: cookieOptions,
         },
         state: {
-            name: 'authjs.state',
+            name: "authjs.state",
             options: cookieOptions,
         },
         nonce: {
-            name: 'authjs.nonce',
+            name: "authjs.nonce",
             options: cookieOptions,
         },
     },
@@ -69,6 +70,6 @@ const v1Router = new Hono()
     // 本番環境では secure cookies を使用
     useSecureCookies: isProduction,
 })))
-    .use('/auth/*', authHandler());
-const authRoute = new Hono().route('/api/v1', v1Router);
+    .use("/auth/*", authHandler());
+const authRoute = new Hono().route("/api/v1", v1Router);
 export default authRoute;
