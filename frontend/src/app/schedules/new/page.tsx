@@ -1,6 +1,7 @@
 'use client';
 
 import { SubmitEvent, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 type Schedule = {
   id: number;
@@ -11,6 +12,7 @@ type Schedule = {
 };
 
 export default function NewSchedulePage() {
+  const router = useRouter();
   const [schedules, setSchedules] = useState<Schedule[]>([]);
 
   async function onSubmit(event: SubmitEvent<HTMLFormElement>) {
@@ -32,15 +34,12 @@ export default function NewSchedulePage() {
           start_time: formData.get('start_time') as string,
           end_time: formData.get('end_time') as string,
         }),
-      }
+      },
     );
 
     const newSchedule = await res.json();
 
-    setSchedules((currentSchedules) => [
-      ...currentSchedules,
-      newSchedule[0],
-    ]);
+    setSchedules((currentSchedules) => [...currentSchedules, newSchedule[0]]);
   }
 
   return (
@@ -88,9 +87,7 @@ export default function NewSchedulePage() {
       </form>
 
       <div className="mt-12 flex flex-col items-center">
-        <h2 className="text-xl font-bold mb-6">
-          登録したスケジュール
-        </h2>
+        <h2 className="text-xl font-bold mb-6">登録したスケジュール</h2>
 
         {schedules.map((schedule) => (
           <div
@@ -105,6 +102,13 @@ export default function NewSchedulePage() {
           </div>
         ))}
       </div>
+      <button
+        type="button"
+        onClick={() => router.push('/dashboard')}
+        className="mt-6 mx-auto block border border-black rounded-md px-6 py-2"
+      >
+        戻る
+      </button>
     </main>
   );
 }
