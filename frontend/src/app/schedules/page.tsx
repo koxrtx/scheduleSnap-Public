@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 type Schedule = {
@@ -11,6 +12,8 @@ type Schedule = {
 };
 
 export default function SchedulesPage() {
+  const router = useRouter();
+
   const [schedules, setSchedules] = useState<Schedule[]>([]);
 
   useEffect(() => {
@@ -19,7 +22,7 @@ export default function SchedulesPage() {
         `${process.env.NEXT_PUBLIC_API_URL}/api/v1/schedules`,
         {
           credentials: 'include',
-        }
+        },
       );
 
       const data = await res.json();
@@ -36,13 +39,21 @@ export default function SchedulesPage() {
 
       {schedules.map((schedule) => (
         <div
-        key={schedule.id}
-        className="w-full max-w-md border border-black rounded-md p-4 mb-4">
+          key={schedule.id}
+          className="w-full max-w-md border border-black rounded-md p-4 mb-4"
+        >
           <p className="font-bold">{schedule.title}</p>
           <p>{schedule.event_date}</p>
           <p>
             {schedule.start_time}〜{schedule.end_time}
           </p>
+          <button
+            type="button"
+            onClick={() => router.push(`/schedules/${schedule.id}/edit`)}
+            className="mt-4 border border-black rounded-md px-4 py-2"
+          >
+            編集
+          </button>
         </div>
       ))}
     </main>

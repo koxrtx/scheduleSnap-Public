@@ -3,7 +3,7 @@
 
 import { useRouter } from 'next/navigation';
 // 画面が表示された後に、この処理を実行する」ためのReactの機能
-import { useEffect } from "react";
+import { useEffect } from 'react';
 import LogoutButton from '@/components/LogoutButton';
 
 import Link from 'next/link';
@@ -16,11 +16,11 @@ export default function Dashboard() {
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth-check`,
         {
-          credentials: "include"
-        }
+          credentials: 'include',
+        },
       );
       if (!res.ok) {
-        router.push("/");
+        router.push('/');
       }
     };
     checkAuth();
@@ -32,15 +32,15 @@ export default function Dashboard() {
         <p>園からもらった予定表を</p>
         <p>カレンダーに登録しよう</p>
         {/* hiddenでボタンを非表示にしてる CRUD処理設計できたらその後予定表を読み込むボタン復活 */}
-        <button className="hidden mt-4 border-2 border-dashed border-black rounded-md px-6 py-3" onClick={() => {
-        // ボタンがクリックされたときに実行する処理
-          document.getElementById("schedule-image")?.click();
-        }}
+        <button
+          className="hidden mt-4 border-2 border-dashed border-black rounded-md px-6 py-3"
+          onClick={() => {
+            // ボタンがクリックされたときに実行する処理
+            document.getElementById('schedule-image')?.click();
+          }}
         >
-      <span>
-        予定表を読み込む
-      </span>
-    </button>
+          <span>予定表を読み込む</span>
+        </button>
         <input
           type="file"
           id="schedule-image"
@@ -49,25 +49,33 @@ export default function Dashboard() {
           capture="environment"
           className="hidden"
           // onChange={async (e) => {
-            //const file = e.target.files?.[0];
-            //if (!file) return;
+          //const file = e.target.files?.[0];
+          //if (!file) return;
 
-            // const res = await client.api.v1.image.upload.$post({
-              //form: {
-                //file,
-              //},
-            //});
-            //if (res.ok) {
-              //const data = await res.json();
-              //console.log(data.message);
-            //}
+          // const res = await client.api.v1.image.upload.$post({
+          //form: {
+          //file,
+          //},
+          //});
+          //if (res.ok) {
+          //const data = await res.json();
+          //console.log(data.message);
+          //}
           //}}
-
         />
-        <Link href="/schedules/new"
-        className="mt-4 border-2 border-dashed border-black rounded-md px-6 py-3">
+        <Link
+          href="/schedules/new"
+          className="mt-4 border-2 border-dashed border-black rounded-md px-6 py-3"
+        >
           予定表を入力する
         </Link>
+        <button
+          type="button"
+          onClick={() => router.push('/schedules')}
+          className="mt-6 mx-auto block border border-black rounded-md px-6 py-2"
+        >
+          スケジュール一覧
+        </button>
         <LogoutButton />
       </div>
     </main>
